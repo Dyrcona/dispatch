@@ -1,0 +1,29 @@
+.TH dispatch 1 "November 25, 2013"
+.SH NAME
+dispatch - run multiple processes at once
+.SH SYNOPSIS
+\fBdispatch\fP [options ...] [files ...]
+.br
+cat filename | \fBdispatch\fP [options ...]
+.SH DESCRIPTION
+dispatch reads a list of commands via files or standard input. It then
+"shells out" to run the commands. It will run a number of them in
+parallel and continue until all commands are finished.
+.SS Options
+.PP
+\fB-v\fP,
+\fB--verbose\fP
+.RS
+Output information about the progress of the running jobs.
+.RE
+.PP
+\fB-n\fP,
+\fB--num=integer\fP
+.RS
+Keep integer number of jobs running in parallel. The default value, if
+this option is omitted, is 2.
+.RE
+.SH AUTHOR
+.PP
+dispatch was written by Jason J. A. Stephenson <jason@sigio.com>.
+
