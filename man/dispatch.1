@@ -6,9 +6,19 @@ dispatch - run multiple processes at once
 .br
 cat filename | \fBdispatch\fP [options ...]
 .SH DESCRIPTION
-dispatch reads a list of commands via files or standard input. It then
-"shells out" to run the commands. It will run a number of them in
-parallel and continue until all commands are finished.
+dispatch reads commands from standard input or from files passed as
+arguments on its command line.  Once an internal list of commands has
+been built, dispatch will fork a process to run each command by
+invoking /bin/sh with the -c option followed by the command and its
+arguments.  It will run a certain number of these commands in
+parallel.  The number is determined by the numeric argument of
+dispatch's num line option (see \fBOptions\fP, below).  If this option
+is omitted, a default value of 2 is used.
+.PP
+dispatch can also output some information about the processes that are
+being run.  This output is sent to the standard error device so as not
+to interfere with any redirection of the standard output from the
+commands being run.
 .SS Options
 .PP
 \fB-v\fP,
@@ -23,6 +33,12 @@ Output information about the progress of the running jobs.
 Keep integer number of jobs running in parallel. The default value, if
 this option is omitted, is 2.
 .RE
+.SH BUGS
+.PP
+None are known at this time.  However, this is a very powerful program
+despite the simplicity of the code.  You could very easily fork bomb
+your system if you use too large a value for the number of processes
+to run.
 .SH AUTHOR
 .PP
 dispatch was written by Jason J. A. Stephenson <jason@sigio.com>.

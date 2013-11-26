@@ -1,0 +1,43 @@
+README for dispatch
+===================
+Jason J.A. Stephenson <jason@sigio.com>
+v1.0.0, 25 November 2013
+
+dispatch is a small utility program intended to be used to run various
+other commands, or jobs, in parallel.  It will read commands from
+standard input or from files passed arguments to its command line.
+Once the internal list of commands has been built, dispatch will fork
+a process to run each command by invoking /bin/sh with the -c option
+followed by the command and its arguments.  It will run a certain
+number of these commands in parallel.  The number is determined by the
+numeric argument of dispatch's num (n) command line option.  If this
+option is omitted, a default value of 2 is used.
+
+dispatch also has a verbose (v) option that takes no argument.  If
+this argument is passed on the command line, it will output some
+information about the processes that are being run and the progress on
+the total list of commands.  This output is sent to the standard error
+device so as not to interfere with any redirection of the standard
+output from the commands being run.
+
+See the man page for a brief synopsis of this program's use.
+
+Installation
+------------
+
+dispatch uses the GNU autotools for installation.  If you have a file
+named `configure` in your distribution, you run it and then `make`,
+followed by `make install`.  You can run `configure --help` for build
+options.
+
+If you don't have the `configure` script, but you do have
+`configure.ac`, then you can generate the `configure` script by
+running `autoreconf -i` in the main distribution directory.  This
+latter event very likely means that you got the code via git.
+
+License
+-------
+
+dispatch is distributed under the terms of the GNU General Public
+License version 3, or later.  The file gpl-3.0.txt contains the text
+of this license.
