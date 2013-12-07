@@ -20,42 +20,12 @@
 #include <fstream>
 #include <iostream>
 #include <list>
-#include <cstring>
-#include <cstdarg>
 #include "dispatch.h"
 
-// A helper function to output a formatted string to std::cerr.  This
-// function prepends the prog_name global to the output.  It also
-// helps with future i18n work, since it is much easier to apply i18n
-// to a printf-style format string than to a series of strings that
-// use the << operator.  After all, the argument order may need to
-// change in some languages.
-void cerr_printf(const char *fmt, ...) {
-	// TODO: Add some error checking.
-	static char *outBuf = new char[opt_line_max];
-	va_list ap;
-	va_start(ap, fmt);
-	vsnprintf(outBuf, opt_line_max, fmt, ap);
-	va_end(ap);
-	std::cerr << prog_name << ": " << outBuf;
-}
-
-// Another helper function to read a line from an istream and push it
-// onto a list.
-std::streamsize read_to_list(std::istream& in, std::list<char *>& l) {
-	static char *buf = new char[opt_line_max];
-	in.getline(buf, opt_line_max);
-	if (in.good()) {
-		std::streamsize in_size = in.gcount();
-		if (in_size > 0) {
-			char *c = new char[in_size];
-			std::strncpy(c, buf, in_size);
-			l.push_back(c);
-		}
-		return in_size;
-	}
-	return 0;
-} 
+// C++ helper functions defined in .cc files.  The files are named for
+// the function defined therein.
+extern void cerr_printf(const char *fmt, ...);
+extern std::streamsize read_to_list(std::istream& in, std::list<char *>& l);
 
 int main(int argc, char **argv) {
 	// Get command line options, if any.

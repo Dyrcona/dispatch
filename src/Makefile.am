@@ -19,5 +19,5 @@ noinst_LIBRARIES = libdispatch.a
 libdispatch_a_SOURCES = options.c dispatch.c
 
 bin_PROGRAMS = dispatch
-dispatch_SOURCES = main.cc dispatch.h
+dispatch_SOURCES = main.cc dispatch.h read_to_list.cc cerr_printf.cc
 dispatch_LDADD = libdispatch.a
