@@ -31,7 +31,10 @@ Output information about the progress of the running jobs.
 \fB--num=integer\fP
 .RS
 Keep integer number of jobs running in parallel. The default value, if
-this option is omitted, is 2.
+this option is omitted, is determined by the number of online CPUs as
+determined by the \fB_SC_NPROCESSORS_ONLN\fP option of the
+\fBsysconf\fP system call. With the value of 2 used as a minimum
+fallback when there is only 1 processor available.
 .RE
 .SH BUGS
 .PP
