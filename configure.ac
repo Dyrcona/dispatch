@@ -2,7 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([dispatch], [1.0.0], [jason@sigio.com])
+AC_INIT([dispatch], [1.0.0a], [jason@sigio.com], [],
+        [http://www.sigio.com/dispatch/])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([src/options.c])
 
