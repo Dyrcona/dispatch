@@ -17,32 +17,20 @@
  * along with dispatch.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * This file is to be included in main.cc so it will have forward
- * declarations of functions and variables defined in other object
- * files.
- */
+#ifndef DISPATCH_H_INCL
+#define DISPATCH_H_INCL 1
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
-/* From dispatch.c, the dispatch function that actually runs the child
- * jobs. */
+/* A function to "dispatch" command via /bin/sh -c. See man 3 dispatch. */
 pid_t dispatch(const char *command);
-
-/* From options.c, our option variables and command line option
- * parsing function. */
-extern long opt_num;
-extern bool opt_verbose;
-extern long opt_line_max;
-extern char *prog_name;
-int options(int argc, char **argv);
 
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* DISPATCH_H_INCL */

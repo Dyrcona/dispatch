@@ -15,9 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with dispatch.  If not, see <http://www.gnu.org/licenses/>.
 
-noinst_LIBRARIES = libdispatch.a
-libdispatch_a_SOURCES = options.c dispatch.c
+# Build and install a dynamic library for the dispatch function.
+lib_LTLIBRARIES = libdispatch.la
+libdispatch_la_SOURCES = dispatch.c
+libdispatch_la_LDFLAGS = -version-info 0:0:0
+include_HEADERS = dispatch.h
 
+# Build our command line utility.
 bin_PROGRAMS = dispatch
-dispatch_SOURCES = main.cc dispatch.h read_to_list.cc cerr_printf.cc
-dispatch_LDADD = libdispatch.a
+dispatch_SOURCES = main.cc options.c dispatch.h read_to_list.cc cerr_printf.cc
+dispatch_LDADD = libdispatch.la

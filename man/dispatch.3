@@ -1,0 +1,42 @@
+.TH dispatch 3 "December 23, 2013"
+
+.SH NAME
+dispatch - fork a process
+
+.SH SYNOPSIS
+\fB#include <dispatch.h>\fP
+.br
+\fBpid_t dispatch(char *\fP\fIcommand\fP\fB);\fP
+
+.SH DESCRIPTION
+The \fBdispatch\fP() function forks a process and invokes \fIcommand\fP
+via \fB/bin/sh -c\fP \fIcommand\fP.
+.PP
+Unlike \fBsystem\fP(3), \fBdispatch\fP() does not call \fBwait\fP(2). It
+is the responsibility of the calling process to wait for and cleanup its child
+processes.
+
+.SS Return Value
+Upon successful return, this function returns the \fBpid_t\fP value returned
+from \fBfork\fP(). This should be a positive value. In the case of error
+forking, a -1 is returned. This function should never return 0.
+
+.SH SEE ALSO
+\fBsh\fP(1), \fBfork\fP(2), \fBwait\fP(2), \fBsystem\fP(3)
+
+.SH COPYRIGHT AND LICENSE
+\fBdispatch\fP() is Copyright (C) 2013 by Jason J. A. Stephenson <jason@sigio.com>.
+.PP
+\fBdispatch\fP() is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+.PP
+dispatch is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.
+.PP
+You should have received a copy of the GNU General Public License
+along with dispatch. If not, see <http://www.gnu.org/licenses/>.
+

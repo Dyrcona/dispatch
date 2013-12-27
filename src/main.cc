@@ -20,12 +20,24 @@
 #include <fstream>
 #include <iostream>
 #include <list>
-#include "dispatch.h"
+#include <sys/types.h>
+#include <sys/wait.h>
+
+#include <dispatch.h>
 
 // C++ helper functions defined in .cc files.  The files are named for
 // the function defined therein.
 extern void cerr_printf(const char *fmt, ...);
 extern std::streamsize read_to_list(std::istream& in, std::list<char *>& l);
+
+/* From options.c, our option variables and command line option
+ * parsing function. */
+extern long opt_num;
+extern bool opt_verbose;
+extern long opt_line_max;
+extern char *prog_name;
+extern "C" int options(int argc, char **argv);
+
 
 int main(int argc, char **argv) {
 	// Get command line options, if any.
