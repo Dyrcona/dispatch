@@ -27,6 +27,7 @@ extern "C" {
 pid_t dispatch(const char *command)
 {
 	static const char *shell = "/bin/sh";
+	errno = 0;
 	pid_t child = fork();
 	if (child == 0) {
 		char *const environ[] = { NULL };

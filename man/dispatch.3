@@ -1,36 +1,50 @@
-.TH dispatch 3 "December 23, 2013"
+.TH dispatch 3 "December 27, 2013"
 
 .SH NAME
 dispatch - fork a process
 
 .SH SYNOPSIS
 \fB#include <dispatch.h>\fP
-.br
+.PP
 \fBpid_t dispatch(char *\fP\fIcommand\fP\fB);\fP
+.PP
+Compile with: \fBcc -o output input.c -ldispatch\fP
 
 .SH DESCRIPTION
 The \fBdispatch\fP() function forks a process and invokes \fIcommand\fP
-via \fB/bin/sh -c\fP \fIcommand\fP.
+via \fB/bin/sh -c\fP \fIcommand\fP. It does so using the \fBfork\fP(2) and
+\fBexecve\fP(2) system calls.
 .PP
 Unlike \fBsystem\fP(3), \fBdispatch\fP() does not call \fBwait\fP(2). It
 is the responsibility of the calling process to wait for and cleanup its child
 processes.
+.PP
+The purpose of \fBdispatch\fP() is to have an interface as simple as
+\fBsystem\fP(3) that allows the execution of multiple commands at
+once.
 
 .SS Return Value
-Upon successful return, this function returns the \fBpid_t\fP value returned
-from \fBfork\fP(). This should be a positive value. In the case of error
-forking, a -1 is returned. This function should never return 0.
+Upon successful return, this function returns the process id of the
+child spawned by \fBfork\fP(2) to the parent process. In the case of
+an error while forking, a -1 is returned, and \fBerrno\fP(3) should be
+set to an appropriate value by \fBfork\fP(2).
+.PP
+\fBdispatch\fP() should never return in the child. If the
+\fBexecve\fP(2) call fails, then the child process will \fBexit\fP(3)
+with its exit value set to \fBerrno\fP(3).
 
 .SH SEE ALSO
-\fBsh\fP(1), \fBfork\fP(2), \fBwait\fP(2), \fBsystem\fP(3)
+\fBsh\fP(1), \fBerrno\fP(3), \fBexit\fP(3), \fBexecve\fP(2),
+\fBfork\fP(2), \fBwait\fP(2), \fBsystem\fP(3)
 
 .SH COPYRIGHT AND LICENSE
-\fBdispatch\fP() is Copyright (C) 2013 by Jason J. A. Stephenson <jason@sigio.com>.
+\fBdispatch\fP() is Copyright (C) 2013 by Jason J. A. Stephenson
+<jason@sigio.com>.
 .PP
-\fBdispatch\fP() is free software: you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+\fBdispatch\fP() is free software: you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 .PP
 dispatch is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
