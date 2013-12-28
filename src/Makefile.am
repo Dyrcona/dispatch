@@ -17,7 +17,9 @@
 
 # Build our command line utility.
 bin_PROGRAMS = dispatch
-dispatch_CPPFLAGS = -I$(top_srcdir)/include
+dispatch_CPPFLAGS = -I$(top_srcdir)/include -DLOCALEDIR=\"$(localedir)\"
 dispatch_LDFLAGS = -L$(top_srcdir)/lib
 dispatch_SOURCES = main.cc options.c read_to_list.cc cerr_printf.cc
-dispatch_LDADD = -ldispatch
+dispatch_LDADD = -ldispatch @LTLIBBOOST_LOCALE@ @LTLIBBOOST_IOSTREAMS@ \
+                  @LTLIBBOOST_PROGRAM_OPTIONS@
+
