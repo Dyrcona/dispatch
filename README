@@ -1,7 +1,7 @@
 README for dispatch
 ===================
 Jason J.A. Stephenson <jason@sigio.com>
-v1.0.0, 25 November 2013
+v2.0.0, 27 December 2013
 
 dispatch is a small utility program intended to be used to run various
 other commands, or jobs, in parallel.  It will read commands from
@@ -34,6 +34,26 @@ If you don't have the `configure` script, but you do have
 `configure.ac`, then you can generate the `configure` script by
 running `autoreconf -i` in the main distribution directory.  This
 latter event very likely means that you got the code via git.
+
+Libdispatch
+-----------
+
+Beginning with version 2.0.0, dispatch installs a shared library,
+libdispatch, to your libdir.  If you are not installing to one of your
+systems' standard locations, you may need to add `${PREFIX}/lib` to
+`LD_LIBRARY_PATH` or alter `ld.so.conf`.
+
+This library contains the implemenation of the dispatch function that
+is used to fork and exec the commands that are dispatched by the
+dispatch program.  This library and function may be used in your own
+programs if you want a similar functionality.  Keep in mind that
+libdispatch is also released under the terms of the GNU GPL version 3,
+or later.  In order to use it, the license of your application must be
+compatible.
+
+If you want to read how to use the function, a man page is included in
+section 3 describing it: `man 3 dispatch` for the details after
+installation.
 
 License
 -------

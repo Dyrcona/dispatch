@@ -16,5 +16,5 @@
 # along with dispatch.  If not, see <http://www.gnu.org/licenses/>.
 
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = src man
+SUBDIRS = include lib src man
 EXTRA_DIST = README gpl-3.0.txt man/dispatch.1 man/dispatch.3

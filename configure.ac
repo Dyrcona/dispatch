@@ -15,6 +15,8 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 
 AC_CONFIG_FILES([Makefile
+                 include/Makefile
+                 lib/Makefile
                  src/Makefile
 		 man/Makefile])
 AC_OUTPUT
