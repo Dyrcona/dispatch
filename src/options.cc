@@ -17,6 +17,7 @@
  * along with dispatch.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <boost/program_options.hpp>
+#include <boost/locale.hpp>
 #include <vector>
 #include <string>
 #include <exception>
@@ -26,6 +27,8 @@
 #include <unistd.h>
 
 namespace po = boost::program_options;
+using boost::locale::format;
+using boost::locale::translate;
 
 /* How many children to fork. */
 long opt_num;
@@ -80,7 +83,7 @@ void options(int argc, char **argv) {
 		std::cerr << mo.what() << std::endl;
 		std::exit(EXIT_FAILURE);
 	} catch (std::exception& e) {
-		std::cerr << "An exception occurred while parsing the command line options:"
+		std::cerr << translate("An exception occurred while parsing the command line options:")
 							<< std::endl << e.what() << std::endl;
 		std::exit(EXIT_FAILURE);
 	}
@@ -100,11 +103,11 @@ void options(int argc, char **argv) {
 	 * throw a fit if opt_num is set to this value or higher. */
 	long max_child = sysconf(_SC_CHILD_MAX);
 	if (opt_num >= max_child) {
-		std::fprintf(stderr, "%s: Number of requested processes (%ld) exceeds the "
-			"maximum allowed by the system (%ld).\n", prog_name, opt_num, max_child);
+		std::cerr << format(translate("The number of requested processes ({1,number}) exceeds the "
+				"maximum allowed by the system ({2,number}).")) % opt_num % max_child << std::endl;
 		std::exit(EXIT_FAILURE);
 	} else if (opt_num <= 0) {
-		std::fprintf(stderr, "%s: Num argument must be positive integer\n", prog_name);
+				std::cerr << translate("The num argument must be a positive integer.") << std::endl;
 		std::exit(EXIT_FAILURE);
 	}
 }

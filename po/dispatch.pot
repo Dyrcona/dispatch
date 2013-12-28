@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Jason J. A. Stephenson
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: dispatch 2.0.0\n"
+"Report-Msgid-Bugs-To: jason@sigio.com\n"
+"POT-Creation-Date: 2013-12-28 18:19-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: main.cc:93
+msgid "Started {1} with child process id {2}."
+msgstr ""
+
+#: main.cc:95
+msgid "Failed to start {1}."
+msgstr ""
+
+#: main.cc:108
+msgid "Child process {1} exited with status {2}."
+msgstr ""
+
+#: main.cc:111
+msgid "Child process {1} terminated by signal {2}."
+msgstr ""
+
+#: main.cc:115
+msgid "Processed {1,number} command out of {2,number}."
+msgid_plural "Processed {1,number} commands out of {2,number}."
+msgstr[0] ""
+msgstr[1] ""
+
+#: options.cc:86
+msgid "An exception occurred while parsing the command line options:"
+msgstr ""
+
+#: options.cc:106
+msgid ""
+"The number of requested processes ({1,number}) exceeds the maximum allowed "
+"by the system ({2,number})."
+msgstr ""
+
+#: options.cc:110
+msgid "The num argument must be a positive integer."
+msgstr ""
