@@ -14,6 +14,19 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_LIBTOOL
 
+# Check for boost headers and libraries that we use.
+AC_LANG_PUSH(C++)
+AC_CHECK_HEADERS([boost/locale.hpp boost/program_options.hpp \
+                  boost/iostreams/concepts.hpp],[],
+                  [AC_MSG_ERROR([Cannot locate a required boost header.
+You may need to set --includedir when running configure, or you may need
+to set the various --with-libboost_*-prefix options.
+See ./configure --help for more information.])])
+AC_LIB_LINKFLAGS([boost_locale])
+AC_LIB_LINKFLAGS([boost_program_options])
+AC_LIB_LINKFLAGS([boost_iostreams])
+AC_LANG_POP(C++)
+
 AC_CONFIG_FILES([Makefile
                  include/Makefile
                  lib/Makefile
