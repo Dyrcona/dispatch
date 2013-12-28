@@ -20,6 +20,8 @@
 #include <fstream>
 #include <iostream>
 #include <list>
+#include <vector>
+#include <string>
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -34,25 +36,24 @@ extern std::streamsize read_to_list(std::istream& in, std::list<char *>& l);
  * parsing function. */
 extern long opt_num;
 extern bool opt_verbose;
-extern long opt_line_max;
 extern char *prog_name;
-extern "C" int options(int argc, char **argv);
-
+extern std::vector<std::string> filelist;
+extern void options(int argc, char **argv);
 
 int main(int argc, char **argv) {
 	// Get command line options, if any.
-	int argi = options(argc, argv);
+	options(argc, argv);
 
 	// Create a list to hold the commands and read the commands from the
 	// files listed on the command line.
 	std::list<char *> commands;
-	while (argi < argc) {
-		std::ifstream ifs(argv[argi], std::ifstream::in);
+	std::vector<std::string>::iterator it;
+	for (it = filelist.begin(); it != filelist.end(); it++) {
+		std::ifstream ifs(it->c_str(), std::ifstream::in);
 		while (ifs.good()) {
 			read_to_list(ifs, commands);
 		}
 		ifs.close();
-		argi++;
 	}
 
 	// If we don't have files, then we must have commands on stdin.

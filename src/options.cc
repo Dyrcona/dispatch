@@ -16,23 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with dispatch.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include <getopt.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include <boost/program_options.hpp>
+#include <vector>
+#include <string>
+#include <exception>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
 #include <unistd.h>
-#include <stdio.h>
 
-/*
- * The following code uses getopt_long() in a manner that is portable
- * to both GNU Lib C and the BSD Lib C implementations.  It makes no
- * use of any of the options or features that differ between these
- * implementations.  If you're building this software on a system
- * without getopt_long, then you may need to install GLibC.
- */
+namespace po = boost::program_options;
 
 /* How many children to fork. */
 long opt_num;
@@ -48,7 +41,10 @@ long opt_line_max;
 /* Name that we were called with. */
 char *prog_name;
 
-int options(int argc, char **argv) {
+/* Vector to hold the list of command files passed on the command line. */
+std::vector<std::string> filelist;
+
+void options(int argc, char **argv) {
 
 	/*
 	 * Set a default for the global opt_num variable using the
@@ -64,50 +60,51 @@ int options(int argc, char **argv) {
 	/* Get the name we were called with. */
 	prog_name = argv[0];
 
-	struct option long_options[] = {
-		{"num", required_argument, 0, 'n'},
-		{"verbose", no_argument, 0, 'v'},
-		{0, 0, 0, 0}
-	};
+	po::options_description opts("Allowed Options");
+	opts.add_options()
+		("help", "Print help message to standard error and exit.")
+		("verbose,v", "Report execution progress of child processes.")
+		("num,n", po::value<long>(&opt_num), "Number of processes to fork.")
+		("file,f", po::value<std::vector<std::string> >(&filelist),
+			"Read list of commands from a file.");
 
-	while (1) {
-		int c = getopt_long(argc, argv, "n:v", long_options, 0);
-		if (c == -1) {
-			break;
-		} else if (c == 'n') {
-			char *endptr;
-			opt_num = strtol(optarg, &endptr, 0);
-			if (opt_num == 0 && endptr == optarg) {
-				fprintf(stderr, "%s: Bad format for num argument: %s\n", prog_name,
-					optarg);
-				exit(EXIT_FAILURE);
-			}
-		} else if (c == 'v') {
-			opt_verbose = true;
-		} else {
-			/* getopt_long reports an unrecognized option, so we dont' have to. */
-			exit(EXIT_FAILURE);
-		}
+	po::positional_options_description popts;
+	popts.add("file", -1);
+
+	po::variables_map vm;
+	try {
+		po::store(po::command_line_parser(argc, argv).options(opts)
+			.positional(popts).run(), vm);
+		po::notify(vm);
+	} catch (po::multiple_occurrences& mo) {
+		std::cerr << mo.what() << std::endl;
+		std::exit(EXIT_FAILURE);
+	} catch (std::exception& e) {
+		std::cerr << "An exception occurred while parsing the command line options:"
+							<< std::endl << e.what() << std::endl;
+		std::exit(EXIT_FAILURE);
 	}
+
+	/* Check for help paramater and if found, print the help to
+	 * std::cerr and then exit. */
+	if (vm.count("help")) {
+		std::cerr << opts << std::endl;
+		std::exit(EXIT_SUCCESS);
+	}
+
+	// Check for the verbose option.
+	if (vm.count("verbose"))
+		opt_verbose = true;
 
 	/* Check for the maximum number of processes per user id.  We will
 	 * throw a fit if opt_num is set to this value or higher. */
 	long max_child = sysconf(_SC_CHILD_MAX);
 	if (opt_num >= max_child) {
-		fprintf(stderr, "%s: Number of requested processes (%ld) exceeds the "
+		std::fprintf(stderr, "%s: Number of requested processes (%ld) exceeds the "
 			"maximum allowed by the system (%ld).\n", prog_name, opt_num, max_child);
-		exit(EXIT_FAILURE);
+		std::exit(EXIT_FAILURE);
 	} else if (opt_num <= 0) {
-		fprintf(stderr, "%s: Num argument must be positive integer\n", prog_name);
-		exit(EXIT_FAILURE);
+		std::fprintf(stderr, "%s: Num argument must be positive integer\n", prog_name);
+		std::exit(EXIT_FAILURE);
 	}
-
-	/* Return the value of optind so that our caller can process any
-	 * non-option command line arguments.  (These should be
-	 * filenames.) */
-	return optind ? optind : 1;
 }
-
-#ifdef __cplusplus
-}
-#endif
