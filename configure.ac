@@ -28,7 +28,10 @@ AC_LIB_LINKFLAGS([boost_program_options])
 AC_LIB_LINKFLAGS([boost_iostreams])
 AC_LANG_POP(C++)
 
-AC_CONFIG_FILES([Makefile
+# Finalize the po/Makefile:
+AM_PO_SUBDIRS
+
+AC_CONFIG_FILES([Makefile po/Makefile.in
                  include/Makefile
                  lib/Makefile
                  src/Makefile
