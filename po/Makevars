@@ -9,7 +9,7 @@ top_builddir = ..
 
 # These options get passed to xgettext.
 XGETTEXT_OPTIONS = --keyword=translate:1,1t --keyword=translate:1,2,3t \
--C --boost --package-name=dispatch --package-version='2.0.0
+-C --boost
 
 # This is the copyright holder that gets inserted into the header of the
 # $(DOMAIN).pot file.  Set this to the copyright holder of the surrounding

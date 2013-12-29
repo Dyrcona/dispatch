@@ -63,13 +63,13 @@ void options(int argc, char **argv) {
 	/* Get the name we were called with. */
 	prog_name = argv[0];
 
-	po::options_description opts("Allowed Options");
+	po::options_description opts(translate("Allowed Options").str().c_str());
 	opts.add_options()
-		("help", "Print help message to standard error and exit.")
-		("verbose,v", "Report execution progress of child processes.")
-		("num,n", po::value<long>(&opt_num), "Number of processes to fork.")
+		("help", translate("Print help message to standard error and exit.").str().c_str())
+		("verbose,v", translate("Report execution progress of child processes.").str().c_str())
+		("num,n", po::value<long>(&opt_num), translate("Number of processes to fork.").str().c_str())
 		("file,f", po::value<std::vector<std::string> >(&filelist),
-			"Read list of commands from a file.");
+			translate("Read list of commands from a file.").str().c_str());
 
 	po::positional_options_description popts;
 	popts.add("file", -1);

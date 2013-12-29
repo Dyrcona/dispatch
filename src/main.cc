@@ -90,8 +90,10 @@ int main(int argc, char **argv) {
 			pid_t child = dispatch(command);
 			if (child != -1) {
 				running.push_back(child);
+				//TRANSLATORS: {1} is a command line. {2} is a process id number.
 				std::cerr << format(translate("Started {1} with child process id {2}.")) % command % child << std::endl;
 			} else {
+				//TRANSLATORS: {1} is a command line.
 				std::cerr << format(translate("Failed to start {1}.")) % command << std::endl;
 			}
 			commands.pop_front();
@@ -105,9 +107,11 @@ int main(int argc, char **argv) {
 				running.remove(child);
 				processed++;
 				if (WIFEXITED(status) && (opt_verbose || WEXITSTATUS(status))) {
+					//TRANSLATORS: {1} is a process id number. {2} is a status integer.
 					std::cerr << format(translate("Child process {1} exited with status {2}.")) % child
 						% WEXITSTATUS(status) << std::endl;
 				} else if (WIFSIGNALED(status)) {
+					//TRANSLATORS: {1} is a process id number. {2} is a signal number.
 					std::cerr << format(translate("Child process {1} terminated by signal {2}.")) % child
 						% WTERMSIG(status) << std::endl;
 				}

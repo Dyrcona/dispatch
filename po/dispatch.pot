@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dispatch 2.0.0\n"
 "Report-Msgid-Bugs-To: jason@sigio.com\n"
-"POT-Creation-Date: 2013-12-28 18:19-0500\n"
+"POT-Creation-Date: 2013-12-29 13:14-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,27 +18,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: main.cc:93
+#. TRANSLATORS: {1} is a command line. {2} is a process id number.
+#: main.cc:94
 msgid "Started {1} with child process id {2}."
 msgstr ""
 
-#: main.cc:95
+#. TRANSLATORS: {1} is a command line.
+#: main.cc:97
 msgid "Failed to start {1}."
 msgstr ""
 
-#: main.cc:108
+#. TRANSLATORS: {1} is a process id number. {2} is a status integer.
+#: main.cc:111
 msgid "Child process {1} exited with status {2}."
 msgstr ""
 
-#: main.cc:111
+#. TRANSLATORS: {1} is a process id number. {2} is a signal number.
+#: main.cc:115
 msgid "Child process {1} terminated by signal {2}."
 msgstr ""
 
-#: main.cc:115
+#: main.cc:119
 msgid "Processed {1,number} command out of {2,number}."
 msgid_plural "Processed {1,number} commands out of {2,number}."
 msgstr[0] ""
 msgstr[1] ""
+
+#: options.cc:66
+msgid "Allowed Options"
+msgstr ""
+
+#: options.cc:68
+msgid "Print help message to standard error and exit."
+msgstr ""
+
+#: options.cc:69
+msgid "Report execution progress of child processes."
+msgstr ""
+
+#: options.cc:70
+msgid "Number of processes to fork."
+msgstr ""
+
+#: options.cc:72
+msgid "Read list of commands from a file."
+msgstr ""
 
 #: options.cc:86
 msgid "An exception occurred while parsing the command line options:"
