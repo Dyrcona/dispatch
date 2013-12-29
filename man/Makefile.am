@@ -15,4 +15,4 @@
 # You should have received a copy of the GNU General Public License
 # along with dispatch.  If not, see <http://www.gnu.org/licenses/>.
 
-man_MANS = dispatch.1 dispatch.3
+dist_man_MANS = dispatch.1 dispatch.3

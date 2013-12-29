@@ -17,4 +17,4 @@
 
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = include lib src man
-EXTRA_DIST = README gpl-3.0.txt man/dispatch.1 man/dispatch.3
+EXTRA_DIST = README gpl-3.0.txt
