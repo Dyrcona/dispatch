@@ -18,23 +18,22 @@
  */
 #include <istream>
 #include <list>
+#include <string>
 #include <cstring>
 
-// From options.c:
-extern long opt_line_max;
-
 // Function to read a line from an istream and push it onto a list.
-std::streamsize read_to_list(std::istream& in, std::list<char *>& l) {
-	static char *buf = new char[opt_line_max];
-	in.getline(buf, opt_line_max);
+std::size_t read_to_list(std::istream& in, std::list<char *>& l) {
+	std::string str;
+	std::getline(in, str);
 	if (in.good()) {
-		std::streamsize in_size = in.gcount();
-		if (in_size > 0) {
-			char *c = new char[in_size];
-			std::strncpy(c, buf, in_size);
+		std::size_t size = str.size();
+		if (size > 0) {
+			char *c = new char[size+1];
+			std::strncpy(c, str.c_str(), size);
+			c[size] = 0;
 			l.push_back(c);
 		}
-		return in_size;
+		return size;
 	}
 	return 0;
 } 

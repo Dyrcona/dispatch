@@ -36,11 +36,6 @@ long opt_num;
 /* Whether or not we want progress messages. */
 bool opt_verbose = false;
 
-/* Maximum length of a line.  This is not really an option, so much as
- * it is a constraint imposed by the system.  We name it like an
- * option anyway. */
-long opt_line_max;
-
 /* Name that we were called with. */
 char *prog_name;
 
@@ -56,9 +51,6 @@ void options(int argc, char **argv) {
 	opt_num = sysconf(_SC_NPROCESSORS_ONLN);
 	/* Make sure it is at least 2. */
 	opt_num = opt_num > 1 ? opt_num : 2;
-
-	/* Get line max via sysconf. */
-	opt_line_max = sysconf(_SC_LINE_MAX);
 
 	/* Get the name we were called with. */
 	prog_name = argv[0];
