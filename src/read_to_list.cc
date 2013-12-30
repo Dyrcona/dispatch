@@ -20,20 +20,35 @@
 #include <list>
 #include <string>
 #include <cstring>
+#include <boost/iostreams/stream.hpp>
+#include <boost/iostreams/concepts.hpp>
+
+namespace io = boost::iostreams;
+
+// A class to implement a boost stream sink for our list of commands.
+class list_sink : public io::sink {
+public:
+	list_sink(std::list<char *>& l) : list(l) {}
+	std::streamsize write(const char_type *s, std::streamsize n) {
+		char *c = new char[n+1];
+		std::strncpy(c, s, n);
+		c[n] = 0;
+		list.insert(list.end(), c);
+		return n + 1;
+	}
+private:
+	std::list<char *>& list;
+};
 
 // Function to read a line from an istream and push it onto a list.
-std::size_t read_to_list(std::istream& in, std::list<char *>& l) {
+std::streamsize read_to_list(std::istream& in, std::list<char *>& l) {
+	io::stream<list_sink> out(l);
 	std::string str;
 	std::getline(in, str);
 	if (in.good()) {
-		std::size_t size = str.size();
-		if (size > 0) {
-			char *c = new char[size+1];
-			std::strncpy(c, str.c_str(), size);
-			c[size] = 0;
-			l.push_back(c);
-		}
-		return size;
+		out << str;
+		out.flush();
+		return in.gcount();
 	}
 	return 0;
 } 

@@ -31,7 +31,7 @@
 
 // C++ helper functions defined in .cc files.  The files are named for
 // the function defined therein.
-extern std::size_t read_to_list(std::istream& in, std::list<char *>& l);
+extern std::streamsize read_to_list(std::istream& in, std::list<char *>& l);
 
 /* From options.cc, our option variables and command line option
  * parsing function. */
