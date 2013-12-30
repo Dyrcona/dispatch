@@ -90,8 +90,10 @@ int main(int argc, char **argv) {
 			pid_t child = dispatch(command);
 			if (child != -1) {
 				running.push_back(child);
-				//TRANSLATORS: {1} is a command line. {2} is a process id number.
-				std::cerr << format(translate("Started {1} with child process id {2}.")) % command % child << std::endl;
+				if (opt_verbose) {
+					//TRANSLATORS: {1} is a command line. {2} is a process id number.
+					std::cerr << format(translate("Started {1} with child process id {2}.")) % command % child << std::endl;
+				}
 			} else {
 				//TRANSLATORS: {1} is a command line.
 				std::cerr << format(translate("Failed to start {1}.")) % command << std::endl;
