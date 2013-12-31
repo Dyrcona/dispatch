@@ -41,14 +41,14 @@ private:
 };
 
 // Function to read a line from an istream and push it onto a list.
-std::streamsize read_to_list(std::istream& in, std::list<char *>& l) {
+std::size_t read_to_list(std::istream& in, std::list<char *>& l) {
 	io::stream<list_sink> out(l);
 	std::string str;
 	std::getline(in, str);
 	if (in.good()) {
 		out << str;
 		out.flush();
-		return in.gcount();
+		return str.size();
 	}
 	return 0;
 } 

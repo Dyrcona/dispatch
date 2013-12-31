@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: dispatch 2.0.0\n"
 "Report-Msgid-Bugs-To: jason@sigio.com\n"
-"POT-Creation-Date: 2013-12-29 13:14-0500\n"
+"POT-Creation-Date: 2013-12-30 22:03-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,61 +19,61 @@ msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
 #. TRANSLATORS: {1} is a command line. {2} is a process id number.
-#: main.cc:94
+#: src/main.cc:104
 msgid "Started {1} with child process id {2}."
 msgstr ""
 
 #. TRANSLATORS: {1} is a command line.
-#: main.cc:97
+#: src/main.cc:108
 msgid "Failed to start {1}."
 msgstr ""
 
 #. TRANSLATORS: {1} is a process id number. {2} is a status integer.
-#: main.cc:111
+#: src/main.cc:122
 msgid "Child process {1} exited with status {2}."
 msgstr ""
 
 #. TRANSLATORS: {1} is a process id number. {2} is a signal number.
-#: main.cc:115
+#: src/main.cc:126
 msgid "Child process {1} terminated by signal {2}."
 msgstr ""
 
-#: main.cc:119
+#: src/main.cc:130
 msgid "Processed {1,number} command out of {2,number}."
 msgid_plural "Processed {1,number} commands out of {2,number}."
 msgstr[0] ""
 msgstr[1] ""
 
-#: options.cc:66
+#: src/options.cc:58
 msgid "Allowed Options"
 msgstr ""
 
-#: options.cc:68
+#: src/options.cc:60
 msgid "Print help message to standard error and exit."
 msgstr ""
 
-#: options.cc:69
+#: src/options.cc:61
 msgid "Report execution progress of child processes."
 msgstr ""
 
-#: options.cc:70
+#: src/options.cc:62
 msgid "Number of processes to fork."
 msgstr ""
 
-#: options.cc:72
+#: src/options.cc:64
 msgid "Read list of commands from a file."
 msgstr ""
 
-#: options.cc:86
+#: src/options.cc:78
 msgid "An exception occurred while parsing the command line options:"
 msgstr ""
 
-#: options.cc:106
+#: src/options.cc:98
 msgid ""
 "The number of requested processes ({1,number}) exceeds the maximum allowed "
 "by the system ({2,number})."
 msgstr ""
 
-#: options.cc:110
+#: src/options.cc:102
 msgid "The num argument must be a positive integer."
 msgstr ""

@@ -26,12 +26,16 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <boost/locale.hpp>
+#include <boost/iostreams/device/file.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+#include "command_input_filter.hh"
+
 #include <config.h>
 #include <dispatch.h>
 
-// C++ helper functions defined in .cc files.  The files are named for
-// the function defined therein.
-extern std::streamsize read_to_list(std::istream& in, std::list<char *>& l);
+// Implemented in read_to_list.cc: A helper function to copy lines
+// from a std::istream and add them to the end of a std::list<char *>.
+extern std::size_t read_to_list(std::istream& in, std::list<char *>& l);
 
 /* From options.cc, our option variables and command line option
  * parsing function. */
@@ -43,6 +47,7 @@ extern void options(int argc, char **argv);
 
 using boost::locale::format;
 using boost::locale::translate;
+namespace io = boost::iostreams;
 
 int main(int argc, char **argv) {
 	// Setup the locale for l10n.
@@ -63,18 +68,22 @@ int main(int argc, char **argv) {
 	std::list<char *> commands;
 	std::vector<std::string>::iterator it;
 	for (it = filelist.begin(); it != filelist.end(); it++) {
-		std::ifstream ifs(it->c_str(), std::ifstream::in);
-		while (ifs.good()) {
-			read_to_list(ifs, commands);
+		io::filtering_istream fis;
+		fis.push(command_input_filter());
+		fis.push(io::file_source(it->c_str()));
+		while (fis.good()) {
+			read_to_list(fis, commands);
 		}
-		ifs.close();
 	}
 
 	// If we don't have files, then we must have commands on stdin.
 	if (commands.empty()) {
+		io::filtering_istream fis;
+		fis.push(command_input_filter());
+		fis.push(std::cin);
 		do {
-			read_to_list(std::cin, commands);			
-		} while (std::cin.good());
+			read_to_list(fis, commands);			
+		} while (fis.good());
 	}
 
 	// Create a list to track the running processes.
