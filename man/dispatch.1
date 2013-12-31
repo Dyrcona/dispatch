@@ -21,6 +21,11 @@ to interfere with any redirection of the standard output from the
 commands being run.
 .SS Options
 .PP
+\fB--help\fP
+.RS
+Output a brief help message and exit.
+.RE
+.PP
 \fB-v\fP,
 \fB--verbose\fP
 .RS
@@ -35,6 +40,15 @@ this option is omitted, is determined by the number of online CPUs as
 determined by the \fB_SC_NPROCESSORS_ONLN\fP option of the
 \fBsysconf\fP system call. With the value of 2 used as a minimum
 fallback when there is only 1 processor available.
+.RE
+.PP
+\fB-f\fP,
+\fB--file=filename\fP
+.RS
+Specify a filename from which to read commands. Specify as many of
+these as you have files. This option is strictly optional. Any
+unadorned comman line argument will be interpreted as a file from
+which to read commands.
 .RE
 .SH BUGS
 .PP

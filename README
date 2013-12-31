@@ -35,6 +35,24 @@ If you don't have the `configure` script, but you do have
 running `autoreconf -i` in the main distribution directory.  This
 latter event very likely means that you got the code via git.
 
+boost
+~~~~~
+
+dispatch requires boost version 1.48 or later.  Specifically, it uses
+the IOStreams, Locale, and Program Options libraries.  If boost is not
+installed in your normal include or libray paths, the `configure`
+script provides options to specify where boost is installed.  If your
+boost installation is not available in your normal include and library
+search paths, you may specify one of the following options to indicate
+where your boost libraries are installed:
+
+`--with-libboost_locale-prefix=/path/to/boost`
+`--with-libboost_iostreams-prefix=/path/to/boost`
+`--with-libboost_program_options-prefix=/path/to/boost`
+
+If you happen to have split your boost installation up over multiple
+directories, then you may need to specify all of the above options.
+
 Libdispatch
 -----------
 
