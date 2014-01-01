@@ -99,7 +99,7 @@ void options(int argc, char **argv) {
 				"maximum allowed by the system ({2,number}).")) % opt_num % max_child << std::endl;
 		std::exit(EXIT_FAILURE);
 	} else if (opt_num <= 0) {
-				std::cerr << translate("The num argument must be a positive integer.") << std::endl;
+		std::cerr << translate("The num argument must be a positive integer.") << std::endl;
 		std::exit(EXIT_FAILURE);
 	}
 }
