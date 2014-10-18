@@ -30,7 +30,7 @@ pid_t dispatch(const char *command)
 	errno = 0;
 	pid_t child = fork();
 	if (child == 0) {
-		char *const environ[] = { NULL };
+		extern char **environ;
 		char *const args[] = { (char *)shell, "-c", (char *)command, NULL };
 		if (execve(shell, args, environ) == -1) 
 			exit(errno);
