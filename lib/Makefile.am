@@ -18,4 +18,4 @@
 # Build and install a dynamic library for the dispatch function.
 lib_LTLIBRARIES = libdispatch.la
 libdispatch_la_SOURCES = dispatch.c
-libdispatch_la_LDFLAGS = -version-info 0:0:0
+libdispatch_la_LDFLAGS = -version-info 0:1:0

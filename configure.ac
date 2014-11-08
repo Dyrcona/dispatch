@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([dispatch], [2.0.0], [jason@sigio.com], [],
+AC_INIT([dispatch], [2.0.1], [jason@sigio.com], [],
         [http://www.sigio.com/dispatch/])
 AC_CONFIG_SRCDIR([src/main.cc])
 AC_CONFIG_HEADER([include/config.h])

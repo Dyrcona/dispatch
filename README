@@ -1,7 +1,7 @@
 README for dispatch
 ===================
 Jason J.A. Stephenson <jason@sigio.com>
-v2.0.0, 27 December 2013
+v2.0.1, 7 November 2014
 
 dispatch is a small utility program intended to be used to run various
 other commands, or jobs, in parallel.  It will read commands from
@@ -40,7 +40,7 @@ boost
 
 dispatch requires boost version 1.48 or later.  Specifically, it uses
 the IOStreams, Locale, and Program Options libraries.  If boost is not
-installed in your normal include or libray paths, the `configure`
+installed in your normal include or library paths, the `configure`
 script provides options to specify where boost is installed.  If your
 boost installation is not available in your normal include and library
 search paths, you may specify one of the following options to indicate
@@ -72,6 +72,10 @@ compatible.
 If you want to read how to use the function, a man page is included in
 section 3 describing it: `man 3 dispatch` for the details after
 installation.
+
+In version 2.0.1 of dispatch, the dispatch library function was fixed
+to use the current user's environment when running dispatched
+commands.  In version 2.0.0, it used an empty environment.
 
 License
 -------
