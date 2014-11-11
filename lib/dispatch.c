@@ -26,16 +26,16 @@ extern "C" {
 
 pid_t dispatch(const char *command)
 {
-	static const char *shell = "/bin/sh";
-	errno = 0;
-	pid_t child = fork();
-	if (child == 0) {
-		extern char **environ;
-		char *const args[] = { (char *)shell, "-c", (char *)command, NULL };
-		if (execve(shell, args, environ) == -1) 
-			exit(errno);
-	}
-	return child;
+  static const char *shell = "/bin/sh";
+  errno = 0;
+  pid_t child = fork();
+  if (child == 0) {
+    extern char **environ;
+    char *const args[] = { (char *)shell, "-c", (char *)command, NULL };
+    if (execve(shell, args, environ) == -1)
+      exit(errno);
+  }
+  return child;
 }
 
 #ifdef __cplusplus

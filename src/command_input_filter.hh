@@ -47,67 +47,67 @@ namespace io = boost::iostreams;
 
 class command_input_filter : public io::input_filter {
 public:
-	explicit command_input_filter() : comment_char('#'), skip(false), hold(0),
-																		skipws(true) {}
-	template<typename Source>
-	int get(Source& src) {
-		int c;
-		while (true) {
-			// If we have something in hold, we return it.
-			if (hold) {
-				c = hold;
-				hold = 0;
-				break;
-			}
-			// Get the next character from the stream.
-			c = io::get(src);
-			// If we have EOF or are interrupted, return.
-			if (c == EOF || c == io::WOULD_BLOCK)
-				break;
-			// Check for skipping whitespace at the beginning of a line.
-			if (std::isspace(c) && skipws)
-				continue;
-			else
-				skipws = false;
-			// Skip the rest of the line if we have a comment character.
-			skip = c == comment_char ? true : c == '\n' ? false : skip;
-			if (!skip) {
-				// Check for backslash.
-				if (c == '\\') {
-					// Get the next character to see what follows.
-					hold = io::get(src);
-					// Bug out if we get EOF, etc.
-					if (hold == EOF || hold == io::WOULD_BLOCK) 
-						break;
-					else if (hold == '\n') {
-						// Backslash before a newline means we join the next line.
-						hold = 0;
-						// Reset skipws whenever we read a newline.
-						skipws = true;
-						continue;
-					}
-				}
-				// Reset skipws whenever we read a newline.
-				if (!skipws && c == '\n')
-					skipws = true;
-				break;
-			}
-		}
-		return c;
-	}
+  explicit command_input_filter() : comment_char('#'), skip(false), hold(0),
+                                    skipws(true) {}
+  template<typename Source>
+  int get(Source& src) {
+    int c;
+    while (true) {
+      // If we have something in hold, we return it.
+      if (hold) {
+        c = hold;
+        hold = 0;
+        break;
+      }
+      // Get the next character from the stream.
+      c = io::get(src);
+      // If we have EOF or are interrupted, return.
+      if (c == EOF || c == io::WOULD_BLOCK)
+        break;
+      // Check for skipping whitespace at the beginning of a line.
+      if (std::isspace(c) && skipws)
+        continue;
+      else
+        skipws = false;
+      // Skip the rest of the line if we have a comment character.
+      skip = c == comment_char ? true : c == '\n' ? false : skip;
+      if (!skip) {
+        // Check for backslash.
+        if (c == '\\') {
+          // Get the next character to see what follows.
+          hold = io::get(src);
+          // Bug out if we get EOF, etc.
+          if (hold == EOF || hold == io::WOULD_BLOCK)
+            break;
+          else if (hold == '\n') {
+            // Backslash before a newline means we join the next line.
+            hold = 0;
+            // Reset skipws whenever we read a newline.
+            skipws = true;
+            continue;
+          }
+        }
+        // Reset skipws whenever we read a newline.
+        if (!skipws && c == '\n')
+          skipws = true;
+        break;
+      }
+    }
+    return c;
+  }
 
-	template<typename Source>
-	void close(Source& src) {
-		skip = false;
-		skipws = true;
-		hold = 0;
-	}
+  template<typename Source>
+  void close(Source& src) {
+    skip = false;
+    skipws = true;
+    hold = 0;
+  }
 
 private:
-	char comment_char;
-	bool skip;
-	int hold;
-	bool skipws;
+  char comment_char;
+  bool skip;
+  int hold;
+  bool skipws;
 };
 
 #endif

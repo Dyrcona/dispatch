@@ -50,90 +50,90 @@ using boost::locale::translate;
 namespace io = boost::iostreams;
 
 int main(int argc, char **argv) {
-	// Setup the locale for l10n.
-	boost::locale::generator gen;
-	gen.add_messages_path(LOCALEDIR);
-	gen.add_messages_domain(PACKAGE);
-	// Set the default locale.
-	std::locale::global(gen(""));
-	// Use it.
-	std::cout.imbue(std::locale());
-	std::cerr.imbue(std::locale());
+  // Setup the locale for l10n.
+  boost::locale::generator gen;
+  gen.add_messages_path(LOCALEDIR);
+  gen.add_messages_domain(PACKAGE);
+  // Set the default locale.
+  std::locale::global(gen(""));
+  // Use it.
+  std::cout.imbue(std::locale());
+  std::cerr.imbue(std::locale());
 
-	// Get command line options, if any.
-	options(argc, argv);
+  // Get command line options, if any.
+  options(argc, argv);
 
-	// Create a list to hold the commands and read the commands from the
-	// files listed on the command line.
-	std::list<char *> commands;
-	std::vector<std::string>::iterator it;
-	for (it = filelist.begin(); it != filelist.end(); it++) {
-		io::filtering_istream fis;
-		fis.push(command_input_filter());
-		fis.push(io::file_source(it->c_str()));
-		while (fis.good()) {
-			read_to_list(fis, commands);
-		}
-	}
+  // Create a list to hold the commands and read the commands from the
+  // files listed on the command line.
+  std::list<char *> commands;
+  std::vector<std::string>::iterator it;
+  for (it = filelist.begin(); it != filelist.end(); it++) {
+    io::filtering_istream fis;
+    fis.push(command_input_filter());
+    fis.push(io::file_source(it->c_str()));
+    while (fis.good()) {
+      read_to_list(fis, commands);
+    }
+  }
 
-	// If we don't have files, then we must have commands on stdin.
-	if (commands.empty()) {
-		io::filtering_istream fis;
-		fis.push(command_input_filter());
-		fis.push(std::cin);
-		do {
-			read_to_list(fis, commands);			
-		} while (fis.good());
-	}
+  // If we don't have files, then we must have commands on stdin.
+  if (commands.empty()) {
+    io::filtering_istream fis;
+    fis.push(command_input_filter());
+    fis.push(std::cin);
+    do {
+      read_to_list(fis, commands);
+    } while (fis.good());
+  }
 
-	// Create a list to track the running processes.
-	std::list<pid_t> running;
-	// How many commands we have:
-	int goal = commands.size();
-	// How many have been run;
-	int processed = 0;
+  // Create a list to track the running processes.
+  std::list<pid_t> running;
+  // How many commands we have:
+  int goal = commands.size();
+  // How many have been run;
+  int processed = 0;
 
-	while (processed < goal) {
-		if (!commands.empty() && running.size() < opt_num) {
-			char *command = commands.front();
-			pid_t child = dispatch(command);
-			if (child != -1) {
-				running.push_back(child);
-				if (opt_verbose) {
-					//TRANSLATORS: {1} is a command line. {2} is a process id number.
-					std::cerr << format(translate("Started {1} with child process id {2}.")) % command % child << std::endl;
-				}
-			} else {
-				//TRANSLATORS: {1} is a command line.
-				std::cerr << format(translate("Failed to start {1}.")) % command << std::endl;
-			}
-			commands.pop_front();
-			delete[] command;
-		} else {
-			int status;
-			pid_t child = wait(&status);
-			std::list<pid_t>::iterator it =
-				find(running.begin(), running.end(), child);
-			if (it != running.end()) {
-				running.remove(child);
-				processed++;
-				if (WIFEXITED(status) && (opt_verbose || WEXITSTATUS(status))) {
-					//TRANSLATORS: {1} is a process id number. {2} is a status integer.
-					std::cerr << format(translate("Child process {1} exited with status {2}.")) % child
-						% WEXITSTATUS(status) << std::endl;
-				} else if (WIFSIGNALED(status)) {
-					//TRANSLATORS: {1} is a process id number. {2} is a signal number.
-					std::cerr << format(translate("Child process {1} terminated by signal {2}.")) % child
-						% WTERMSIG(status) << std::endl;
-				}
-				if (opt_verbose) {
-					std::cerr << format(translate("Processed {1,number} command out of {2,number}.",
-							"Processed {1,number} commands out of {2,number}.", processed)) % processed % goal << std::endl;
-				}
-			}
-		}
-	}
+  while (processed < goal) {
+    if (!commands.empty() && running.size() < opt_num) {
+      char *command = commands.front();
+      pid_t child = dispatch(command);
+      if (child != -1) {
+        running.push_back(child);
+        if (opt_verbose) {
+          //TRANSLATORS: {1} is a command line. {2} is a process id number.
+          std::cerr << format(translate("Started {1} with child process id {2}.")) % command % child << std::endl;
+        }
+      } else {
+        //TRANSLATORS: {1} is a command line.
+        std::cerr << format(translate("Failed to start {1}.")) % command << std::endl;
+      }
+      commands.pop_front();
+      delete[] command;
+    } else {
+      int status;
+      pid_t child = wait(&status);
+      std::list<pid_t>::iterator it =
+        find(running.begin(), running.end(), child);
+      if (it != running.end()) {
+        running.remove(child);
+        processed++;
+        if (WIFEXITED(status) && (opt_verbose || WEXITSTATUS(status))) {
+          //TRANSLATORS: {1} is a process id number. {2} is a status integer.
+          std::cerr << format(translate("Child process {1} exited with status {2}.")) % child
+            % WEXITSTATUS(status) << std::endl;
+        } else if (WIFSIGNALED(status)) {
+          //TRANSLATORS: {1} is a process id number. {2} is a signal number.
+          std::cerr << format(translate("Child process {1} terminated by signal {2}.")) % child
+            % WTERMSIG(status) << std::endl;
+        }
+        if (opt_verbose) {
+          std::cerr << format(translate("Processed {1,number} command out of {2,number}.",
+              "Processed {1,number} commands out of {2,number}.", processed)) % processed % goal << std::endl;
+        }
+      }
+    }
+  }
 
-	// Just to be pedantic.
-	return 0;
+  // Just to be pedantic.
+  return 0;
 }
