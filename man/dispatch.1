@@ -12,8 +12,8 @@ been built, dispatch will fork a process to run each command by
 invoking /bin/sh with the -c option followed by the command and its
 arguments. It will run a certain number of these commands in
 parallel. The number is determined by the numeric argument of
-dispatch's num line option (see \fBOptions\fP, below). If this option
-is omitted, a default value of 2 is used.
+dispatch's num command line option (see \fBOptions\fP, below). If this
+option is omitted, a default value is used.
 .PP
 dispatch can also output some information about the processes that are
 being run. This output is sent to the standard error device so as not
@@ -47,7 +47,7 @@ fallback when there is only 1 processor available.
 .RS
 Specify a filename from which to read commands. Specify as many of
 these as you have files. This option is strictly optional. Any
-unadorned comman line argument will be interpreted as a file from
+unadorned command line argument will be interpreted as a file from
 which to read commands.
 .RE
 .SH BUGS
