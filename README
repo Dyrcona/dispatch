@@ -58,7 +58,7 @@ Libdispatch
 
 Beginning with version 2.0.0, dispatch installs a shared library,
 libdispatch, to your libdir.  If you are not installing to one of your
-systems' standard locations, you may need to add `${PREFIX}/lib` to
+system's standard locations, you may need to add `${PREFIX}/lib` to
 `LD_LIBRARY_PATH` or alter `ld.so.conf`.
 
 This library contains the implemenation of the dispatch function that
